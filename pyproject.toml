@@ -9,8 +9,8 @@ dependencies = [
     "python-dotenv>=1.2.1",
     "python-telegram-bot[http2]>=22.5",
     "requests>=2.28.1",
-    "torch>=2.6.0",
-    "torchvision>=0.21.0",
+    "torch",
+    "torchvision",
 ]
 
 [tool.uv.sources]
@@ -19,7 +19,8 @@ torchvision = { index = "pytorch" }
 
 [[tool.uv.index]]
 name = "pytorch"
-url = "https://download.pytorch.org/whl/cu124"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
 
 [tool.black]
 line-length = 120
