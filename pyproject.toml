@@ -1,0 +1,21 @@
+[project]
+name = "gpu-monitor"
+version = "0.1.0"
+description = "Monitor & preserve GPU"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "gputil>=1.4.0",
+    "python-telegram-bot[http2]>=22.5",
+    "requests>=2.28.1",
+    "torch>=2.6.0",
+    "torchvision>=0.21.0",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch" }
+torchvision = { index = "pytorch" }
+
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu124"
