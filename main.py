@@ -1,10 +1,13 @@
+import os
 import logging
+from dotenv import load_dotenv
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler, InlineQueryHandler
 from telegram.request import HTTPXRequest
 from uuid import uuid4
 
-TOKEN = "<YOUR_TOKEN>"
+load_dotenv()
+bot_token = os.getenv('BOT_TOKEN')
 
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
@@ -59,7 +62,7 @@ async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
-    application = ApplicationBuilder().token(TOKEN).build()
+    application = ApplicationBuilder().token(bot_token).build()
 
     start_handler = CommandHandler("start", start)  # 创建 /start 命令 handler
     caps_handler = CommandHandler("caps", caps)

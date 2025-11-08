@@ -1,12 +1,14 @@
+import os
 import logging
+from dotenv import load_dotenv
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler, InlineQueryHandler
 from telegram.request import HTTPXRequest
 from uuid import uuid4
 import gpu_monitor
 
-TOKEN = "7791912773:AAFqy-7ZRwlgIFr8NyPDFTEqa6NurfZpNUQ"
 
+load_dotenv()
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
 
@@ -57,9 +59,9 @@ async def find_idle_gpu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     查找空闲的 GPU
     """
     idle_gpus = gpu_monitor.find_idle_gpu()
-    text = ""
+    text = "空闲 GPU："
     for gpu in idle_gpus:
-        text += f"GPU {gpu['gpu_id']} 空闲\n"
+        text += f"GPU {gpu['gpu_id']}\n"
     await context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
@@ -71,8 +73,8 @@ async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
-    request = HTTPXRequest(proxy="http://127.0.0.1:6154")
-    application = ApplicationBuilder().token(TOKEN).request(request).build()
+    request = HTTPXRequest(proxy=os.getenv("https_proxy"))
+    application = ApplicationBuilder().token(os.getenv("BOT_TOKEN")).request(request).build()
 
     start_handler = CommandHandler("start", start)  # 创建 /start 命令 handler
     caps_handler = CommandHandler("caps", caps)
