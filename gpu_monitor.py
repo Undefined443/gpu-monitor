@@ -25,7 +25,7 @@ def get_gpu_usage_gputil():
                 "gpu_id": gpu.id,
                 "memory_used": gpu.memoryUsed,
                 "memory_total": gpu.memoryTotal,
-                "util": gpu.load * 100,
+                "util": gpu.load,
             })
         return gpu_usage
     except Exception as e:
@@ -63,7 +63,8 @@ def main():
         for gpu in find_idle_gpu():
             memory_used = gpu["memory_used"] / 1024
             memory_total = gpu["memory_total"] / 1024
-            message = f"Host: {hostname}\nGPU: {gpu['gpu_id']}\nMemory Used: {memory_used:.2f} GiB / {memory_total:.2f} GiB\nGPU Utilization: {gpu['util']:.0f}%"
+            util = gpu["util"] * 100
+            message = f"Host: {hostname}\nGPU: {gpu['gpu_id']}\nMemory Used: {memory_used:.2f} GiB / {memory_total:.2f} GiB\nGPU Utilization: {util:.0f}%"
             send_message(message)
         time.sleep(INTERVAL)
 
